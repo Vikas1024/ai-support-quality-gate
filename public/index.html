@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Synthetic support dashboard for AI summary release-gate testing."
+    />
+    <title>Support Desk | Summary Review</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script type="module" src="/dist/app/app.js"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand-mark">L</div>
+      <div><strong>LogiQlink Support Desk</strong><span>Quality gate demonstration</span></div>
+      <div class="environment">LOCAL · SYNTHETIC DATA</div>
+    </header>
+    <main class="layout">
+      <section class="page-heading">
+        <p class="eyebrow">SUPPORT OPERATIONS / TICKETS</p>
+        <h1>Ticket review</h1>
+        <p>Generate, validate and approve an AI-assisted ticket summary.</p>
+      </section>
+      <section class="ticket-card" aria-labelledby="ticket-title">
+        <div class="ticket-header">
+          <div>
+            <span class="ticket-id">T-1042</span><span class="priority">Normal priority</span>
+          </div>
+          <span class="open-state">● Open</span>
+        </div>
+        <h2 id="ticket-title">Delayed shipment for order #8841</h2>
+        <div class="messages" aria-label="Ticket messages">
+          <article class="message">
+            <div class="avatar customer">CU</div>
+            <div>
+              <div class="message-meta"><strong>Customer</strong><span>Message m1</span></div>
+              <p>My order #8841 has not arrived yet.</p>
+            </div>
+          </article>
+          <article class="message">
+            <div class="avatar support">SU</div>
+            <div>
+              <div class="message-meta"><strong>Support</strong><span>Message m2</span></div>
+              <p>The carrier reported a transit delay. We are investigating.</p>
+            </div>
+          </article>
+          <article class="message">
+            <div class="avatar customer">CU</div>
+            <div>
+              <div class="message-meta"><strong>Customer</strong><span>Message m3</span></div>
+              <p>Please let me know when there is an update.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section class="summary-card" aria-labelledby="summary-heading">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">AI ASSISTED</p>
+            <h2 id="summary-heading">Ticket summary</h2>
+          </div>
+          <span class="synthetic-tag">MOCK SERVICE</span>
+        </div>
+        <div id="summary-panel" class="summary-panel" data-state="empty" aria-live="polite">
+          <p id="summary-text">No summary generated yet.</p>
+        </div>
+        <p id="status-message" class="status-message" data-state="info" role="status">
+          Ready to generate a summary.
+        </p>
+        <div class="actions">
+          <button id="generate-button" class="button button-primary" type="button">
+            Generate summary</button
+          ><button id="retry-button" class="button button-secondary" type="button" hidden>
+            Retry generation</button
+          ><button id="approve-button" class="button button-approve" type="button" disabled>
+            Approve summary
+          </button>
+        </div>
+        <p class="footnote">
+          Approval requires a non-empty summary and citations that all belong to this ticket.
+        </p>
+      </section>
+    </main>
+    <footer>Principal Quality Engineering · Take-home exercise · Synthetic fixture only</footer>
+  </body>
+</html>

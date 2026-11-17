@@ -1,0 +1,31 @@
+{
+  "name": "ai-support-quality-gate",
+  "version": "1.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Deterministic Playwright release gate for an AI-assisted support summary workflow",
+  "scripts": {
+    "clean": "node -e \"import('node:fs').then(fs=>fs.rmSync('public/dist',{recursive:true,force:true}))\"",
+    "build": "npm run clean && tsc -p tsconfig.json",
+    "start": "tsx server.ts",
+    "format:write": "prettier --write \"**/*.{ts,mjs,js,json,md,yml,yaml,css,html}\"",
+    "format:check": "prettier --check \"**/*.{ts,mjs,js,json,md,yml,yaml,css,html}\"",
+    "typecheck": "npm run build && tsc --noEmit -p tsconfig.typecheck.json",
+    "test:evaluation": "npm run build && tsx scripts/run-playwright.ts --suite=Evaluation tests/evaluation",
+    "test:api": "npm run build && tsx scripts/run-playwright.ts --suite=API tests/api",
+    "test:ui": "npm run build && tsx scripts/run-playwright.ts --suite=UI tests/ui",
+    "test": "npm run build && tsx scripts/run-playwright.ts --suite=Complete",
+    "test:headed": "npm run build && tsx scripts/run-playwright.ts --suite=UI --headed tests/ui",
+    "test:regression": "tsx scripts/run-regression.ts",
+    "quality:check": "npm run format:check && npm run typecheck && npm test",
+    "ci": "npm run quality:check",
+    "test:demo": "npm run build && tsx scripts/run-playwright.ts --suite=Complete --demo"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1",
+    "@types/node": "22.15.30",
+    "prettier": "3.6.2",
+    "tsx": "^4.20.6",
+    "typescript": "5.9.3"
+  }
+}
