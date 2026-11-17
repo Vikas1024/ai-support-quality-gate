@@ -36,6 +36,9 @@ jobs:
         with:
           chrome-version: stable
 
+      - name: Install Playwright FFmpeg utility
+        run: npx playwright install ffmpeg
+
       - name: Formatting check
         run: npm run format:check
 
