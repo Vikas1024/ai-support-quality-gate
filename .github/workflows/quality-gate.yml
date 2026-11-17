@@ -13,26 +13,41 @@ permissions:
 jobs:
   release-gate:
     name: Required quality checks
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
+
+    env:
+      CI: true
+      PW_CHANNEL: chrome
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
+
       - name: Install locked dependencies
         run: npm ci
-      - name: Install Playwright browser and system dependencies
-        run: npx playwright install --with-deps chromium
+
+      - name: Install Google Chrome Stable
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
       - name: Formatting check
         run: npm run format:check
+
       - name: TypeScript type check
         run: npm run typecheck
+
       - name: Build
         run: npm run build
+
       - name: Complete release-blocking test suite
         run: npm test
+
       - name: Upload HTML reports and failure evidence
         if: always()
         uses: actions/upload-artifact@v4

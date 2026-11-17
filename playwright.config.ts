@@ -3,7 +3,7 @@ import path from 'node:path';
 
 const outputDir = process.env.TEST_OUTPUT_DIR ?? path.resolve('reports', 'temporary-test-output');
 const reporterPath = path.resolve('scripts', 'single-html-reporter.ts');
-const browserChannel = process.env.PW_CHANNEL ?? (process.env.CI ? 'chromium' : 'chrome');
+const browserChannel = process.env.PW_CHANNEL ?? 'chrome';
 
 export default defineConfig({
   testDir: './tests',
