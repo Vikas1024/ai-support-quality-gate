@@ -18,6 +18,7 @@ npm run format:check
 npm run typecheck
 npm run build
 npm test
+npm run quality:check
 ```
 
 To start the local demo:
@@ -90,7 +91,7 @@ Reports are ignored by Git. GitHub Actions uploads the `reports/` directory as a
 
 The GitHub Actions workflow is defined in `.github/workflows/quality-gate.yml`. It runs on pushes and pull requests to `main` or `master`, and supports manual execution.
 
-The workflow installs locked dependencies, sets up Google Chrome Stable and the Playwright FFmpeg utility, then runs formatting, TypeScript checks, the build and the complete test suite.
+The workflow runs on `ubuntu-24.04`, installs locked dependencies, sets up Google Chrome Stable and the Playwright FFmpeg utility, then runs formatting, TypeScript checks, the build and the complete test suite.
 
 Formatting, type-checking, build, API, UI, evaluation or required test-infrastructure failures block the workflow. Reports and available failure evidence are uploaded even when a preceding step fails.
 
@@ -104,9 +105,9 @@ Run:
 npm run test:regression
 ```
 
-The script temporarily disables the current-ticket citation membership guard in `src/domain/summary.ts`, rebuilds, and runs the deterministic evaluation suite. The cross-ticket citation example should then fail. The script restores the original source in a `finally` block and rebuilds the clean implementation.
+The script temporarily disables both current-ticket citation checks: the domain approval guard in `src/domain/summary.ts` and the independent attribution check in `src/evaluation/evaluator.ts`. It then rebuilds and runs the deterministic evaluation suite. The cross-ticket citation example must fail because the evaluator incorrectly treats it as acceptable.
 
-The command exits non-zero when the regression is detected; this is expected for the demonstration. Verify that the baseline is restored by running:
+The script restores both original source files in a `finally` block and rebuilds the clean implementation. The command exits non-zero when the regression is detected; this is expected for the demonstration. Verify that the baseline is restored by running:
 
 ```bash
 npm test
